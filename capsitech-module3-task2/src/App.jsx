@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Weather from './Weather';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -11,35 +12,41 @@ function App() {
 
   const API_KEY = 'bbfd3ed80db425131d30a01d78b3bfa3';
 
-  const getWeather = async (cityName) => {
-    try {
-      const weatherResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`
-      );
-      const forecastResponse = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${API_KEY}&units=metric`
-      );
+  useEffect(() => {
+    if (city.trim() === '') return;
 
-      const weatherData = await weatherResponse.json();
-      const forecastData = await forecastResponse.json();
-
-      if (weatherData.cod === 200 && forecastData.cod === '200') {
-        setWeather(weatherData);
-        const filteredForecast = forecastData.list.filter(item =>
-          item.dt_txt.includes('12:00:00')
+    const getWeather = async () => {
+      try {
+        const weatherResponse = await axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
         );
-        setForecast(filteredForecast.slice(0, 5));
-        setShowWeather(true);
-      } else {
-        setWeather(null);
-        setForecast([]);
-        alert('City not found. Please try again.');
+        const forecastResponse = await axios.get(
+          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=metric`
+        );
+
+        const weatherData = weatherResponse.data;
+        const forecastData = forecastResponse.data;
+
+        if (weatherData.cod === 200 && forecastData.cod === '200') {
+          setWeather(weatherData);
+          const filteredForecast = forecastData.list.filter(item =>
+            item.dt_txt.includes('12:00:00')
+          );
+          setForecast(filteredForecast.slice(0, 5));
+          setShowWeather(true);
+        } else {
+          setWeather(null);
+          setForecast([]);
+          alert('City not found. Please try again.');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Failed to fetch weather data.');
       }
-    } catch (error) {
-      console.error(error);
-      alert('Failed to fetch weather data.');
-    }
-  };
+    };
+
+    getWeather();
+  }, [city]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,7 +55,6 @@ function App() {
       return;
     }
     setCity(inputCity);
-    getWeather(inputCity);
   };
 
   return (
