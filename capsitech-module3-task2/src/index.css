@@ -4,54 +4,107 @@
   font-family: "Poppins", sans-serif;
 }
 
+.weather-container {
+  border: none;
+  border-radius: 1rem;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* Increased shadow */
+  max-width: 960px;
+  margin: auto;
+  transition: box-shadow 0.3s ease;
+}
+
+.weather-container:hover {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2); /* Slight hover effect */
+}
+
+
 .font-1 {
   font-size: 20px;
+  font-weight: 500;
 }
 
 .font-2 {
-  font-size: 160px;
-  color: gray;
+  font-size: 110px;
+  color: #212529;
   line-height: 1;
+  font-weight: 600;
 }
 
 .font2-color {
-  color: gray;
+  color: #6c757d;
 }
 
 .font-3 {
   font-size: 26px;
+  font-weight: 500;
 }
 
 .font-4 {
-  font-size: 21px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.forecast-card {
+  background-color: #f8f9fa;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  width: 140px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.forecast-card:hover {
+  background-color: #e9ecef;
+  transform: translateY(-4px);
+}
+
+@media (max-width: 992px) {
+  .font-2 {
+    font-size: 90px;
+  }
+
+  .forecast-card {
+    width: 120px;
+  }
 }
 
 @media (max-width: 768px) {
   .font-2 {
-    font-size: 80px;
+    font-size: 70px;
   }
-  .font-3 {
-    font-size: 20px;
-  }
-  .font-4 {
-    font-size: 18px;
-  }
+
   .font-1 {
     font-size: 16px;
+  }
+
+  .font-3 {
+    font-size: 22px;
+  }
+
+  .forecast-card {
+    width: 100px;
   }
 }
 
 @media (max-width: 480px) {
   .font-2 {
-    font-size: 60px;
+    font-size: 50px;
   }
+
+  .font-1 {
+    font-size: 14px;
+  }
+
   .font-3 {
     font-size: 18px;
   }
-  .font-4 {
-    font-size: 16px;
+
+  .forecast-card {
+    width: 100%;
   }
-  .font-1 {
-    font-size: 14px;
+
+  .weather-container {
+    padding: 1rem !important;
   }
 }
